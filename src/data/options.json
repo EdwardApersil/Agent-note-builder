@@ -1,0 +1,101 @@
+{
+  "fields": [
+    {
+      "key": "campaign",
+      "label": "Campaign",
+      "options": [
+        "Community",
+        "Discount",
+        "Legal",
+        "Other",
+        "Recovery",
+        "Refinance",
+        "Restructure",
+        "Written Off"
+      ]
+    },
+    {
+      "key": "outcome",
+      "label": "Outcome",
+      "options": [
+        "Answered – Borrower",
+        "Answered – Relative",
+        "Answered – Third Party",
+        "Answering Machine",
+        "Busy",
+        "Call Dropped",
+        "Callback Requested (Answered)",
+        "Invalid Number",
+        "No Answer",
+        "Phone Switched Off",
+        "Third Party Picked (Not Borrower)",
+        "Unreachable (NetworkorOut of coverage)",
+        "Wrong Number"
+      ]
+    },
+    {
+      "key": "payment_commitment",
+      "label": "Payment Commitment",
+      "options": [
+        "Paid During Call",
+        "PTP – Today",
+        "PTP – Tomorrow",
+        "PTP – This Week",
+        "PTP – This Month",
+        "PTP – Next Month",
+        "Partial Payment Commitment (No Date)",
+        "Refused to Pay",
+        "Will Not Pay",
+        "Refused to Commit",
+        "No Commitment",
+        "Rescheduled (Customer requested later)",
+        "Third Party Will Deliver Message",
+        "Dispute or Complaint",
+        "Escalated to Team Lead",
+        "NULL"
+      ]
+    },
+    {
+      "key": "understood_offer",
+      "label": "Understood Offer",
+      "options": [
+        "Clear (Understood offer + plan)",
+        "Partial (Some confusion)",
+        "Not Clear (Did not understand)",
+        "Null (Not connected or not applicable)",
+        "Can State Due Date & Amount (Yes)",
+        "Can State Due Date & Amount (Partially)",
+        "Can State Due Date & Amount (No)",
+        "Null"
+      ]
+    },
+    {
+      "key": "main_reason_category",
+      "label": "Main Reason Category",
+      "options": [
+        "Salary or Income delay",
+        "Insufficient funds",
+        "Business cash flow",
+        "Personal emergency",
+        "Sick",
+        "Death",
+        "Technical issue (App)",
+        "USSD issue",
+        "Network or MoMo issue",
+        "Didn't understand offer",
+        "Didn't understand repayment plan",
+        "Avoidant or Uncooperative",
+        "Other",
+        "NULL",
+        "Escalation: Dispute or Complaint",
+        "Escalation: Consent issue (didn't agree to offer)",
+        "Escalation: Technical (payment failure)",
+        "Escalation: Hardship (needs review)",
+        "Escalation: Fraud suspicion or Scam fear",
+        "Escalation: Wrong number or invalid contact",
+        "Escalation: Other",
+        "Escalation: Null"
+      ]
+    }
+  ]
+}

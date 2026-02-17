@@ -1,0 +1,3 @@
+(() => {
+  window.FidoNote = window.FidoNote || {};
+})();

@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Fido Note Builder",
+  "version": "3.1.0",
+  "description": "Floating note builder for structured collection notes with searchable dropdowns, call timer, dark mode, and reminders.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["storage", "alarms", "notifications"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "src/background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "src/content/00-namespace.js",
+        "src/content/01-storage.js",
+        "src/content/02-clipboard.js",
+        "src/content/03-sheets.js",
+        "src/content/04-phone-detect.js",
+        "src/content/05-format.js",
+        "src/content/06-combobox.js",
+        "src/content/07-call-timer.js",
+        "src/content/08-task-manager.js",
+        "src/content/09-note-form.js",
+        "src/content/10-suggestions.js",
+        "src/content/11-widget.js",
+        "src/content/12-activity.js",
+        "src/content/13-main.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/data/options.json",
+        "src/styles/widget.css",
+        "src/content/webrtc-hook.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

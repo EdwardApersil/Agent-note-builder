@@ -1,0 +1,1030 @@
+/* ==============================
+   Fido Note Builder v3 — Styles
+   Light/Dark theme via CSS vars
+   ============================== */
+
+/* --- Theme Variables --- */
+.fido-widget {
+  --fn-bg: #FFFFFF;
+  --fn-bg-alt: #F0FAFE;
+  --fn-bg-panel: #A3F8FF;
+  --fn-text: #212726;
+  --fn-text-muted: #5A6B68;
+  --fn-accent: #D6086B;
+  --fn-accent-hover: #B5055A;
+  --fn-border: #D7E1DF;
+  --fn-input-bg: #FFFFFF;
+  --fn-shadow: rgba(0, 0, 0, 0.12);
+  --fn-shadow-lg: rgba(33, 39, 38, 0.2);
+  --fn-radius: 12px;
+  --fn-radius-sm: 8px;
+  --fn-font: -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  all: initial;
+  font-family: var(--fn-font);
+  color: var(--fn-text);
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 2147483647;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.fido-widget[data-theme="dark"] {
+  --fn-bg: #1E1E2E;
+  --fn-bg-alt: #2A2A3C;
+  --fn-bg-panel: #252538;
+  --fn-text: #E0E0E0;
+  --fn-text-muted: #9A9AB0;
+  --fn-accent: #FF4D94;
+  --fn-accent-hover: #FF6BA8;
+  --fn-border: #3A3A4C;
+  --fn-input-bg: #2A2A3C;
+  --fn-shadow: rgba(0, 0, 0, 0.3);
+  --fn-shadow-lg: rgba(0, 0, 0, 0.4);
+}
+
+.fido-widget * {
+  box-sizing: border-box;
+}
+
+/* --- Toggle Button --- */
+.fn-toggle {
+  background: var(--fn-accent);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-family: var(--fn-font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px var(--fn-shadow-lg);
+  transition: background 0.2s, transform 0.15s;
+  pointer-events: auto;
+}
+
+.fn-toggle:hover {
+  background: var(--fn-accent-hover);
+  transform: scale(1.03);
+}
+
+/* --- Panel --- */
+.fn-panel {
+  width: 340px;
+  max-height: 72vh;
+  overflow: hidden;
+  background: var(--fn-bg-panel);
+  border: 1px solid var(--fn-border);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px var(--fn-shadow-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  pointer-events: auto;
+  transition: opacity 0.15s;
+}
+
+.fn-hidden {
+  display: none !important;
+}
+
+/* --- Header --- */
+.fn-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 20;
+  background: var(--fn-bg-panel);
+  padding: 2px 0 8px 0;
+  border-bottom: 1px solid var(--fn-border);
+  margin-bottom: 10px;
+  user-select: none;
+}
+
+.fn-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--fn-text);
+}
+
+.fn-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.fn-current-user {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fn-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.fn-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* --- Status --- */
+.fn-status {
+  font-size: 11px;
+  color: var(--fn-accent);
+  min-height: 16px;
+}
+
+/* --- Call Badge --- */
+.fn-call-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--fn-text);
+  background: var(--fn-bg);
+  border: 1px solid var(--fn-border);
+  border-radius: 999px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+/* --- Icon Buttons (header) --- */
+.fn-icon-btn {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--fn-border);
+  border-radius: 999px;
+  background: var(--fn-bg);
+  color: var(--fn-text);
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.fn-icon-btn:hover {
+  border-color: var(--fn-accent);
+}
+
+.fn-add-btn {
+  background: var(--fn-accent);
+  color: #fff;
+  border-color: var(--fn-accent-hover);
+}
+
+.fn-add-btn:hover {
+  background: var(--fn-accent-hover);
+}
+
+/* --- Tabs --- */
+.fn-tabs {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 19;
+  background: var(--fn-bg-panel);
+  margin-bottom: 12px;
+  padding-top: 2px;
+  border-bottom: 2px solid var(--fn-border);
+}
+
+.fn-tab {
+  flex: 1;
+  padding: 8px 12px;
+  font-family: var(--fn-font);
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  color: var(--fn-text-muted);
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.fn-tab:hover {
+  color: var(--fn-text);
+}
+
+.fn-tab.fn-tab-active {
+  color: var(--fn-accent);
+  border-bottom-color: var(--fn-accent);
+}
+
+/* --- Tab Panes --- */
+.fn-tab-pane {
+  display: none;
+}
+
+.fn-tab-pane.fn-tab-visible {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- Body --- */
+.fn-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 2px;
+}
+
+/* --- Labels --- */
+.fn-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fn-text-muted);
+  margin-bottom: 4px;
+}
+
+/* --- Combobox --- */
+.fn-combobox {
+  position: relative;
+  margin-bottom: 2px;
+}
+
+.fn-combo-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.fn-combo-input {
+  width: 100%;
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius-sm);
+  padding: 8px 32px 8px 10px;
+  font-family: var(--fn-font);
+  font-size: 12px;
+  background: var(--fn-input-bg);
+  color: var(--fn-text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.fn-combo-input:focus {
+  border-color: var(--fn-accent);
+}
+
+.fn-combo-input::placeholder {
+  color: var(--fn-text-muted);
+  opacity: 0.7;
+}
+
+.fn-combo-clear {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: var(--fn-border);
+  color: var(--fn-text);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.fn-combo-clear:hover {
+  background: var(--fn-accent);
+  color: #fff;
+}
+
+.fn-combo-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 180px;
+  overflow-y: auto;
+  background: var(--fn-bg);
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius-sm);
+  box-shadow: 0 8px 20px var(--fn-shadow);
+  margin: 4px 0 0 0;
+  padding: 4px 0;
+  list-style: none;
+  z-index: 10;
+}
+
+.fn-combo-list li {
+  padding: 7px 10px;
+  font-size: 12px;
+  color: var(--fn-text);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.fn-combo-list li:hover,
+.fn-combo-list li.fn-combo-active {
+  background: var(--fn-bg-alt);
+}
+
+/* --- Inputs / Textarea --- */
+.fn-input,
+.fn-textarea {
+  width: 100%;
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius-sm);
+  padding: 8px 10px;
+  font-family: var(--fn-font);
+  font-size: 12px;
+  background: var(--fn-input-bg);
+  color: var(--fn-text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.fn-input:focus,
+.fn-textarea:focus {
+  border-color: var(--fn-accent);
+}
+
+.fn-textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+/* --- Keep Campaign Row --- */
+.fn-keep-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--fn-text);
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.fn-checkbox {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--fn-accent);
+}
+
+.fn-keep-text {
+  font-weight: 600;
+  font-size: 11px;
+}
+
+/* --- Hint Text --- */
+.fn-hint {
+  font-size: 11px;
+  color: var(--fn-text-muted);
+}
+
+/* --- Question Hint --- */
+.fn-question-hint {
+  font-size: 12px;
+  color: var(--fn-accent);
+  background: var(--fn-bg);
+  border-left: 3px solid var(--fn-accent-hover);
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* --- Action Buttons --- */
+.fn-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.fn-btn {
+  flex: 1;
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius-sm);
+  padding: 8px 12px;
+  font-family: var(--fn-font);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--fn-bg);
+  color: var(--fn-text);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.fn-btn:hover {
+  border-color: var(--fn-accent);
+}
+
+.fn-primary {
+  background: var(--fn-accent);
+  color: #fff;
+  border-color: var(--fn-accent-hover);
+}
+
+.fn-primary:hover {
+  background: var(--fn-accent-hover);
+}
+
+.fn-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: var(--fn-border);
+  color: var(--fn-text-muted);
+  border-color: var(--fn-border);
+}
+
+.fn-btn-small {
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  font-size: 11px;
+}
+
+/* --- Manual Copy Fallback --- */
+.fn-manual {
+  width: 100%;
+  min-height: 80px;
+  border: 1px dashed var(--fn-border);
+  border-radius: var(--fn-radius-sm);
+  padding: 8px 10px;
+  font-family: var(--fn-font);
+  font-size: 12px;
+  background: var(--fn-input-bg);
+  color: var(--fn-text);
+}
+
+/* --- Error --- */
+.fn-error {
+  font-size: 12px;
+  color: var(--fn-accent);
+  background: #FFF0F5;
+  padding: 10px;
+  border-radius: var(--fn-radius-sm);
+  border: 1px solid var(--fn-accent);
+}
+
+.fn-error-text {
+  color: var(--fn-accent);
+}
+
+/* --- Call Timer Card --- */
+.fn-timer-card {
+  background: var(--fn-bg);
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fn-timer-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fn-text-muted);
+}
+
+.fn-timer-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fn-text);
+}
+
+/* --- Task Section --- */
+.fn-task-section {
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius);
+  background: var(--fn-bg);
+  overflow: hidden;
+}
+
+.fn-task-toggle {
+  width: 100%;
+  border: none;
+  background: var(--fn-bg);
+  color: var(--fn-text);
+  font-family: var(--fn-font);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fn-task-toggle:hover {
+  background: var(--fn-bg-alt);
+}
+
+.fn-task-body {
+  border-top: 1px solid var(--fn-border);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fn-task-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fn-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fn-task-empty {
+  font-size: 12px;
+  color: var(--fn-text-muted);
+  padding: 6px 0;
+}
+
+.fn-task-item {
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius-sm);
+  background: var(--fn-bg);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fn-task-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fn-task-item-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fn-text);
+}
+
+.fn-task-item-time {
+  font-size: 11px;
+  color: var(--fn-text-muted);
+}
+
+.fn-task-item-detail {
+  font-size: 11px;
+  color: var(--fn-text);
+}
+
+.fn-task-item-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* --- Daily Activity --- */
+.fn-activity-section {
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius);
+  background: var(--fn-bg);
+  overflow: hidden;
+}
+
+.fn-activity-toggle {
+  width: 100%;
+  border: none;
+  background: var(--fn-bg);
+  color: var(--fn-text);
+  font-family: var(--fn-font);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fn-activity-toggle:hover {
+  background: var(--fn-bg-alt);
+}
+
+.fn-activity-body {
+  border-top: 1px solid var(--fn-border);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fn-activity-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fn-text);
+}
+
+.fn-activity-user {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--fn-text-muted);
+}
+
+.fn-activity-extraction {
+  font-size: 11px;
+  font-weight: 700;
+  color: #92400E;
+  background: #FEF3C7;
+  border: 1px solid #F59E0B;
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.fido-widget[data-theme="dark"] .fn-activity-extraction {
+  color: #FDE68A;
+  background: #2A2215;
+  border-color: #D97706;
+}
+
+.fn-activity-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.fn-activity-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fn-activity-card {
+  border: 1px solid var(--fn-border);
+  border-radius: 10px;
+  background: var(--fn-bg);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fn-activity-card-head {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--fn-accent);
+}
+
+.fn-activity-item {
+  border: 1px solid var(--fn-border);
+  border-radius: 8px;
+  background: var(--fn-bg-alt);
+  padding: 6px 8px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fn-activity-key {
+  font-size: 11px;
+  color: var(--fn-text-muted);
+}
+
+.fn-activity-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fn-text);
+  text-align: right;
+}
+
+/* --- Modal --- */
+.fn-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(33, 39, 38, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2147483646;
+  padding: 12px;
+}
+
+.fn-modal {
+  width: min(380px, 95vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--fn-border);
+  border-radius: 14px;
+  background: var(--fn-bg);
+  box-shadow: 0 20px 50px var(--fn-shadow-lg);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fn-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fn-modal-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fn-text);
+}
+
+.fn-modal-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* --- Chips --- */
+.fn-chip-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.fn-chip {
+  border: 1px solid var(--fn-border);
+  border-radius: 999px;
+  background: var(--fn-bg);
+  color: var(--fn-text);
+  font-family: var(--fn-font);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.fn-chip:hover {
+  border-color: var(--fn-accent);
+  color: var(--fn-accent);
+}
+
+/* --- Suggestions Tab --- */
+.fn-suggestions-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fn-script-box {
+  padding: 12px;
+  background: var(--fn-bg);
+  border: 1px solid var(--fn-border);
+  border-radius: var(--fn-radius);
+}
+
+.fn-script-content {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--fn-text-muted);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  min-height: 60px;
+  margin-top: 6px;
+}
+
+/* --- Notes Tab --- */
+.fn-notes-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* --- Scrollbar (body) --- */
+.fn-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.fn-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.fn-body::-webkit-scrollbar-thumb {
+  background: var(--fn-border);
+  border-radius: 3px;
+}
+
+.fn-body::-webkit-scrollbar-thumb:hover {
+  background: var(--fn-text-muted);
+}
+
+/* --- Overdue Task Highlight --- */
+.fn-task-overdue {
+  border-left: 3px solid #F59E0B;
+  background: #FFFBEB;
+}
+
+.fido-widget[data-theme="dark"] .fn-task-overdue {
+  background: #2A2215;
+  border-left-color: #D97706;
+}
+
+/* --- Alert Badge (pulsing amber dot on toggle) --- */
+.fn-alert-badge {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 14px;
+  height: 14px;
+  background: #F59E0B;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  animation: fn-pulse 1.5s ease-in-out infinite;
+}
+
+.fido-widget[data-theme="dark"] .fn-alert-badge {
+  border-color: #1E1E2E;
+}
+
+.fn-toggle-alert {
+  animation: fn-glow 2s ease-in-out infinite;
+}
+
+@keyframes fn-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.7; }
+}
+
+@keyframes fn-glow {
+  0%, 100% { box-shadow: 0 8px 24px var(--fn-shadow-lg); }
+  50% { box-shadow: 0 4px 20px rgba(245, 158, 11, 0.5), 0 0 8px rgba(245, 158, 11, 0.3); }
+}
+
+/* --- Due Popup (amber notification) --- */
+.fn-due-popup {
+  position: absolute;
+  right: 0;
+  bottom: 54px;
+  z-index: 2147483647;
+  width: min(340px, 95vw);
+  border: 2px solid #F59E0B;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  box-shadow: 0 12px 36px rgba(245, 158, 11, 0.25), 0 0 0 1px rgba(245, 158, 11, 0.1);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
+  animation: fn-slide-in 0.3s ease-out;
+}
+
+.fido-widget[data-theme="dark"] .fn-due-popup {
+  background: linear-gradient(135deg, #2A2215 0%, #332B1A 100%);
+  border-color: #D97706;
+  box-shadow: 0 12px 36px rgba(217, 119, 6, 0.3);
+}
+
+@keyframes fn-slide-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fn-due-popup-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fn-due-popup-bell {
+  font-size: 18px;
+  animation: fn-ring 1s ease-in-out 2;
+}
+
+@keyframes fn-ring {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-14deg); }
+  45% { transform: rotate(10deg); }
+  60% { transform: rotate(-10deg); }
+  75% { transform: rotate(4deg); }
+}
+
+.fn-due-popup-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #92400E;
+  flex: 1;
+}
+
+.fido-widget[data-theme="dark"] .fn-due-popup-title {
+  color: #FBBF24;
+}
+
+.fn-due-popup-count {
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  background: #D97706;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.fn-due-popup-client {
+  font-size: 14px;
+  font-weight: 700;
+  color: #78350F;
+}
+
+.fido-widget[data-theme="dark"] .fn-due-popup-client {
+  color: #FDE68A;
+}
+
+.fn-due-popup-meta {
+  font-size: 11px;
+  color: #92400E;
+}
+
+.fido-widget[data-theme="dark"] .fn-due-popup-meta {
+  color: #D97706;
+}
+
+.fn-due-popup-note {
+  font-size: 12px;
+  color: #78350F;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 6px;
+  padding: 8px 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.fido-widget[data-theme="dark"] .fn-due-popup-note {
+  color: #FDE68A;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.fn-due-popup-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.fn-due-snooze {
+  background: #FEF3C7;
+  color: #92400E;
+  border-color: #F59E0B;
+  font-weight: 700;
+}
+
+.fn-due-snooze:hover {
+  background: #FDE68A;
+  border-color: #D97706;
+}
+
+.fido-widget[data-theme="dark"] .fn-due-snooze {
+  background: #3D2E10;
+  color: #FBBF24;
+  border-color: #D97706;
+}
+
+.fn-due-execute {
+  background: #D97706;
+  color: #fff;
+  border-color: #B45309;
+  font-weight: 700;
+}
+
+.fn-due-execute:hover {
+  background: #B45309;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+  .fn-panel {
+    width: 92vw;
+  }
+
+  .fn-actions,
+  .fn-task-item-actions,
+  .fn-modal-actions,
+  .fn-due-popup-actions {
+    flex-direction: column;
+  }
+}
