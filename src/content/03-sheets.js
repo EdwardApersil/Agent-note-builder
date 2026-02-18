@@ -95,6 +95,7 @@
       var outcomeNotes = {};
       var reasonNotes = {};
       var paymentFlags = {};
+      var paymentNotes = {};
       for (var i = 0; i < index.length; i++) {
         var item = index[i];
         var r = await fetch(PUB_URL + "?output=csv&gid=" + item.gid, { cache: "no-store" });
@@ -111,11 +112,12 @@
         }
         if (lower === "payment commitment") {
           paymentFlags = parseMapping(text, 0, 2);
+          paymentNotes = parseMapping(text, 0, 1);
         }
         fields.push({ key: toKey(item.name), label: item.name, options: opts });
       }
       if (!fields.length) { throw new Error("empty"); }
-      var data = { fields: fields, questionMap: questionMap, outcomeNotes: outcomeNotes, reasonNotes: reasonNotes, paymentFlags: paymentFlags };
+      var data = { fields: fields, questionMap: questionMap, outcomeNotes: outcomeNotes, reasonNotes: reasonNotes, paymentFlags: paymentFlags, paymentNotes: paymentNotes };
       optionsCache = data;
       await FidoNote.Storage.sessionSet(OPTIONS_CACHE, data);
       return data;
@@ -128,7 +130,7 @@
     var url = chrome.runtime.getURL("src/data/options.json");
     var r = await fetch(url);
     var json = await r.json();
-    var data = { fields: json.fields || [], questionMap: {}, outcomeNotes: {}, reasonNotes: {}, paymentFlags: {} };
+    var data = { fields: json.fields || [], questionMap: {}, outcomeNotes: {}, reasonNotes: {}, paymentFlags: {}, paymentNotes: {} };
     optionsCache = data;
     return data;
   }

@@ -39,6 +39,10 @@
             }
             if (field.key === "payment_commitment") {
               updateP2PVisibility(val);
+              if (val && data.paymentNotes) {
+                var pNote = data.paymentNotes[val.toLowerCase()];
+                if (pNote !== undefined) { textarea.value = pNote; updateCopyBtn(); }
+              }
             }
           }
         });
