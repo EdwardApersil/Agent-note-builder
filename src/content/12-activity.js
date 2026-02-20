@@ -3,8 +3,10 @@
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vQABWMd_ibWUmu5iTKWyMGyCKBWH6Yv1LJAehXcbNGTNhJ5BXuHipWUWlrUZLh_tLyC3kWk61nMstw0/pubhtml";
   var SHEET_PUB_URL = SHEET_HTML_URL.replace(/\/pubhtml(?:\?.*)?$/i, "/pub");
   var XCALLY_USER_KEY = "xcally_username";
-  var ACTIVITY_CACHE_KEY = "fn_activity_v1";
+  var ACTIVITY_CACHE_KEY = "fn_activity_v2"; // bumped to discard cache from old column layout
   var CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+  // Preferred display order for known columns. Any columns in the sheet that are NOT listed
+  // here will still appear — they're appended after the known ones automatically.
   var METRICS_ORDER = [
     "AGENT", "REPORTING_DATE", "TOTAL_LOGIN", "TOTAL_PAUSE", "MEETING_TRAINING_PAUSE",
     "ADMIN_TIME", "DISPOSITION_TIME", "TALK_TIME", "DAILY_NAH", "CALLS_COUNT", "EXTRACTION_DATE"
@@ -36,7 +38,8 @@
     var headerIndex = -1;
     for (var i = 0; i < rows.length; i++) {
       var normalized = rows[i].map(normalizeHeader);
-      if (normalized.indexOf("AGENT") >= 0 && normalized.indexOf("EXTRACTION_DATE") >= 0) {
+      // Only require AGENT — any other columns (including EXTRACTION_DATE) can be renamed freely
+      if (normalized.indexOf("AGENT") >= 0) {
         headerIndex = i;
         break;
       }
@@ -222,12 +225,35 @@
       var head = document.createElement("div");
       head.className = "fn-activity-card-head";
       head.textContent = match.country;
+
+      // Find the extraction/date column dynamically — works even if it was renamed
+      var extractionKey = null;
+      var rowKeys = Object.keys(match.row || {});
+      for (var ki = 0; ki < rowKeys.length; ki++) {
+        if (rowKeys[ki].indexOf("EXTRACT") !== -1 || rowKeys[ki].indexOf("DATE") !== -1) {
+          extractionKey = rowKeys[ki];
+          break;
+        }
+      }
       var extraction = document.createElement("div");
       extraction.className = "fn-activity-extraction";
-      extraction.textContent = "Extraction Date: " + (match.row.EXTRACTION_DATE || "--");
+      extraction.textContent = (extractionKey ? extractionKey.replace(/_/g, " ") : "Extraction Date") +
+        ": " + (extractionKey && match.row[extractionKey] ? match.row[extractionKey] : "--");
+
+      // Build display order: preferred METRICS_ORDER columns first (if present in the row),
+      // then any additional columns from the sheet that aren't in the list.
+      var seen = {};
+      var displayKeys = [];
+      METRICS_ORDER.forEach(function (k) {
+        if (k in match.row) { displayKeys.push(k); seen[k] = true; }
+      });
+      rowKeys.forEach(function (k) {
+        if (!seen[k]) { displayKeys.push(k); }
+      });
+
       var grid = document.createElement("div");
       grid.className = "fn-activity-grid";
-      METRICS_ORDER.forEach(function (key) {
+      displayKeys.forEach(function (key) {
         var item = document.createElement("div");
         item.className = "fn-activity-item";
         var k = document.createElement("div");
@@ -235,7 +261,7 @@
         k.textContent = key.replace(/_/g, " ");
         var v = document.createElement("div");
         v.className = "fn-activity-value";
-        v.textContent = match.row && match.row[key] ? match.row[key] : "--";
+        v.textContent = match.row[key] || "--";
         item.append(k, v);
         grid.appendChild(item);
       });

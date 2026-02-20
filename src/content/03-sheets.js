@@ -4,7 +4,8 @@
   var HTML_URL = PUB_URL + "html";
   var SUGGESTIONS_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vTljCCUPSqDBqEvuZsqBT4BqqTVXo7rJRD7NIyp856a8bm4zmLURKnKUA7fQOP4wiRUN0tOhzI7EPHm/pub?gid=1282883121&single=true&output=csv";
-  var OPTIONS_CACHE = "fn_options_v1";
+  // Bumped to v2 so any cached data from the old column layout is discarded
+  var OPTIONS_CACHE = "fn_options_v2";
   var SUGGESTIONS_CACHE = "fn_suggestions_v1";
   var optionsCache = null;
   var suggestionsCache = null;
@@ -53,28 +54,53 @@
       .filter(function (item) { return item.name.toLowerCase() !== "list"; });
   }
 
+  // Find the first column whose header contains any of the given keywords (case-insensitive).
+  // Returns -1 if no match found.
+  function findColByKeywords(headers, keywords) {
+    for (var i = 0; i < headers.length; i++) {
+      var h = (headers[i] || "").toLowerCase().trim();
+      for (var j = 0; j < keywords.length; j++) {
+        if (h.indexOf(keywords[j].toLowerCase()) !== -1) { return i; }
+      }
+    }
+    return -1;
+  }
+
+  // Extract options from the first column, always skipping row 0 (header) regardless of its value.
   function parseColumn(text) {
     var rows = parseCsv(text);
     var seen = {};
     var opts = [];
-    for (var i = 0; i < rows.length; i++) {
+    for (var i = 1; i < rows.length; i++) { // i=1: always skip header row
       var v = (rows[i][0] || "").replace(/^\ufeff/, "").trim();
-      if (!v || v.toLowerCase() === "option" || seen[v]) { continue; }
+      if (!v || seen[v]) { continue; }
       seen[v] = true;
       opts.push(v);
     }
     return opts;
   }
 
-  function parseMapping(text, kIdx, vIdx) {
-    if (kIdx == null) { kIdx = 0; }
-    if (vIdx == null) { vIdx = 1; }
+  // Build a key→value map using header names to locate the right columns dynamically.
+  // keyHints/valueHints are arrays of keywords to search for in the header row.
+  // Falls back to fallbackKIdx / fallbackVIdx if no header match is found.
+  function parseMappingByHeaders(text, keyHints, valueHints, fallbackKIdx, fallbackVIdx) {
     var rows = parseCsv(text);
+    if (!rows.length) { return {}; }
+
+    // Row 0 is always the header
+    var headers = rows[0].map(function (h) { return (h || "").replace(/^\ufeff/, "").trim(); });
+
+    var kIdx = findColByKeywords(headers, keyHints);
+    if (kIdx === -1) { kIdx = fallbackKIdx != null ? fallbackKIdx : 0; }
+
+    var vIdx = findColByKeywords(headers, valueHints);
+    if (vIdx === -1) { vIdx = fallbackVIdx != null ? fallbackVIdx : 1; }
+
     var map = {};
-    for (var i = 0; i < rows.length; i++) {
+    for (var i = 1; i < rows.length; i++) { // skip header row
       var row = rows[i];
-      if (!row || row.length <= vIdx) { continue; }
-      var k = (row[kIdx] || "").replace(/^\ufeff/, "").trim();
+      if (!row || row.length <= Math.max(kIdx, vIdx)) { continue; }
+      var k = (row[kIdx] || "").trim();
       var v = (row[vIdx] || "").trim();
       if (k) { map[k.toLowerCase()] = v; }
     }
@@ -95,6 +121,7 @@
       var outcomeNotes = {};
       var reasonNotes = {};
       var paymentFlags = {};
+      var paymentNotes = {};
       for (var i = 0; i < index.length; i++) {
         var item = index[i];
         var r = await fetch(PUB_URL + "?output=csv&gid=" + item.gid, { cache: "no-store" });
@@ -102,20 +129,53 @@
         var text = await r.text();
         var opts = parseColumn(text);
         var lower = item.name.toLowerCase();
+
         if (lower === "main reason category") {
-          questionMap = parseMapping(text, 0, 1);
-          reasonNotes = parseMapping(text, 0, 2);
+          // Key column: the reason category option
+          // Question-hint column: suggested question to ask the customer
+          // Note column: auto-fill note text
+          questionMap = parseMappingByHeaders(text,
+            ["main reason", "reason", "category", "option"],
+            ["question", "hint", "suggested question", "script", "ask"],
+            0, 1
+          );
+          reasonNotes = parseMappingByHeaders(text,
+            ["main reason", "reason", "category", "option"],
+            ["note", "auto", "fill", "message", "text", "response"],
+            0, 2
+          );
         }
+
         if (lower === "outcome") {
-          outcomeNotes = parseMapping(text);
+          // Key column: the outcome option
+          // Value column: auto-fill note text
+          outcomeNotes = parseMappingByHeaders(text,
+            ["outcome", "option"],
+            ["note", "auto", "fill", "message", "text", "response"],
+            0, 1
+          );
         }
+
         if (lower === "payment commitment") {
-          paymentFlags = parseMapping(text, 0, 2);
+          // Key column: the payment commitment option
+          // Note column: auto-fill note text
+          // Flag column: controls P2P date field visibility ("show"/"hide")
+          paymentNotes = parseMappingByHeaders(text,
+            ["payment commitment", "payment", "commitment", "option"],
+            ["note", "auto", "fill", "message", "text", "response"],
+            0, 1
+          );
+          paymentFlags = parseMappingByHeaders(text,
+            ["payment commitment", "payment", "commitment", "option"],
+            ["show", "flag", "p2p", "date", "hide", "visibility"],
+            0, 2
+          );
         }
+
         fields.push({ key: toKey(item.name), label: item.name, options: opts });
       }
       if (!fields.length) { throw new Error("empty"); }
-      var data = { fields: fields, questionMap: questionMap, outcomeNotes: outcomeNotes, reasonNotes: reasonNotes, paymentFlags: paymentFlags };
+      var data = { fields: fields, questionMap: questionMap, outcomeNotes: outcomeNotes, reasonNotes: reasonNotes, paymentFlags: paymentFlags, paymentNotes: paymentNotes };
       optionsCache = data;
       await FidoNote.Storage.sessionSet(OPTIONS_CACHE, data);
       return data;
@@ -128,7 +188,7 @@
     var url = chrome.runtime.getURL("src/data/options.json");
     var r = await fetch(url);
     var json = await r.json();
-    var data = { fields: json.fields || [], questionMap: {}, outcomeNotes: {}, reasonNotes: {}, paymentFlags: {} };
+    var data = { fields: json.fields || [], questionMap: {}, outcomeNotes: {}, reasonNotes: {}, paymentFlags: {}, paymentNotes: {} };
     optionsCache = data;
     return data;
   }

@@ -9,13 +9,13 @@
     "128": "icons/icon-128.png"
   },
   "permissions": ["storage", "alarms", "notifications"],
-  "host_permissions": ["<all_urls>"],
+  "host_permissions": ["https://*.mambu.com/*", "https://*.fido.money/*", "https://52.49.51.30/*","https://ec2-52-49-51-30.eu-west-1.compute.amazonaws.com/*"],
   "background": {
     "service_worker": "src/background/service-worker.js"
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://*.mambu.com/*", "https://*.fido.money/*", "https://52.49.51.30/*", "https://ec2-52-49-51-30.eu-west-1.compute.amazonaws.com/*"],
       "js": [
         "src/content/00-namespace.js",
         "src/content/01-storage.js",
