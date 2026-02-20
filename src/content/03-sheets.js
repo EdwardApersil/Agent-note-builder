@@ -157,6 +157,7 @@
         }
 
         if (lower === "payment commitment") {
+<<<<<<< HEAD
           // Key column: the payment commitment option
           // Note column: auto-fill note text
           // Flag column: controls P2P date field visibility ("show"/"hide")
@@ -170,6 +171,10 @@
             ["show", "flag", "p2p", "date", "hide", "visibility"],
             0, 2
           );
+=======
+          paymentFlags = parseMapping(text, 0, 2);
+          paymentNotes = parseMapping(text, 0, 1);
+>>>>>>> f335669fd4406c947c80384f60e4dfc5be7bd313
         }
 
         fields.push({ key: toKey(item.name), label: item.name, options: opts });

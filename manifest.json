@@ -9,13 +9,21 @@
     "128": "icons/icon-128.png"
   },
   "permissions": ["storage", "alarms", "notifications"],
+<<<<<<< HEAD
   "host_permissions": ["https://*.mambu.com/*", "https://*.fido.money/*", "https://52.49.51.30/*","https://ec2-52-49-51-30.eu-west-1.compute.amazonaws.com/*"],
+=======
+  "host_permissions": ["https://*.mambu.com/*", "https://*.fido.money/*", "https://52.49.51.30/*"],
+>>>>>>> f335669fd4406c947c80384f60e4dfc5be7bd313
   "background": {
     "service_worker": "src/background/service-worker.js"
   },
   "content_scripts": [
     {
+<<<<<<< HEAD
       "matches": ["https://*.mambu.com/*", "https://*.fido.money/*", "https://52.49.51.30/*", "https://ec2-52-49-51-30.eu-west-1.compute.amazonaws.com/*"],
+=======
+      "matches": ["https://*.mambu.com/*", "https://*.fido.money/*", "https://52.49.51.30/*"],
+>>>>>>> f335669fd4406c947c80384f60e4dfc5be7bd313
       "js": [
         "src/content/00-namespace.js",
         "src/content/01-storage.js",
